@@ -1,0 +1,63 @@
+﻿@model Health_Insurance_Management.Models.Employee
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Admin/Layout/_Layout.cshtml";
+}
+
+<div class="content">
+    <h4>Employee: @Html.DisplayFor(model => model.EmployeeName)</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th> @Html.DisplayNameFor(model => model.GetPolicy.PolicyName):</th>
+                        <td> @Html.DisplayNameFor(model => model.GetPolicy.PolicyName)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.EmployeeName):</th>
+                        <td>@Html.DisplayFor(model => model.EmployeeName)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Designation):</th>
+                        <td>@Html.DisplayFor(model => model.Designation)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.JoinDate):</th>
+                        <td>@Html.DisplayFor(model => model.JoinDate)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Salary):</th>
+                        <td>@Html.DisplayFor(model => model.Salary)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.EmployeeAddress):</th>
+                        <td>@Html.DisplayFor(model => model.EmployeeAddress)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.EmployeePhone):</th>
+                        <td>@Html.DisplayFor(model => model.EmployeePhone)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Status):</th>
+                        <td>@Html.DisplayFor(model => model.Status)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CreatedDate):</th>
+                        <td>@Html.DisplayFor(model => model.CreatedDate)</td>
+                    </tr>
+                </table>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions no-color">
+                    <a href="@Url.Action("Edit", "Employees", new { id = Model.EmployeeId })" class="btn btn-info" >Edit</a> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
+        </div>
+    </div>
+</div>

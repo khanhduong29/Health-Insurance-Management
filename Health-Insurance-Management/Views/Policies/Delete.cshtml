@@ -1,0 +1,97 @@
+﻿@model Health_Insurance_Management.Models.Policy
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Admin/Layout/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Policy</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PolicyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PolicyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PolicyDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PolicyDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Emi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Emi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MedicalId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MedicalId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

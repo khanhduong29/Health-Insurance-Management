@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Health_Insurance_Management.Models.Policy>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/Layout/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Company.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PolicyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PolicyDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Emi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MedicalId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PolicyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PolicyDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Emi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedicalId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdatedDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PolicyId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PolicyId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PolicyId })
+        </td>
+    </tr>
+}
+
+</table>

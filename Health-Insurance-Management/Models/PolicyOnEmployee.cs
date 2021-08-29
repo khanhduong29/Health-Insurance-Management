@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Health_Insurance_Management.Models.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,10 +22,8 @@ namespace Health_Insurance_Management.Models
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
-        public int Status { get; set; }
+        public Status Status { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
-        
-        
+        public DateTime? UpdatedDate { get; set; }
     }
 }

@@ -1,0 +1,51 @@
+﻿@model Health_Insurance_Management.Models.PolicyOnEmployee
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Admin/Layout/_Layout.cshtml";
+}
+
+<div class="content">
+    <h4>Employee Policy: @Html.DisplayNameFor(model => model.Employee.EmployeeName)</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th> @Html.DisplayNameFor(model => model.Employee.EmployeeName):</th>
+                        <td> @Html.DisplayNameFor(model => model.Employee.EmployeeName)</td>
+                    </tr>
+                    <tr>
+                        <th> @Html.DisplayNameFor(model => model.Policy.PolicyName):</th>
+                        <td> @Html.DisplayNameFor(model => model.Policy.PolicyName)</td>
+                    </tr>
+                    <tr>
+                        <th> @Html.DisplayNameFor(model => model.StartDate):</th>
+                        <td> @Html.DisplayNameFor(model => model.StartDate)</td>
+                    </tr>
+                    <tr>
+                        <th> @Html.DisplayNameFor(model => model.EndDate):</th>
+                        <td> @Html.DisplayNameFor(model => model.EndDate)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Status):</th>
+                        <td>@Html.DisplayFor(model => model.Status)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CreatedDate):</th>
+                        <td>@Html.DisplayFor(model => model.CreatedDate)</td>
+                    </tr>
+                </table>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions no-color">
+                    <a href="@Url.Action("Edit", "PolicyOnEmployees", new { id = Model.EmployeeId })" class="btn btn-info">Edit</a> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
+        </div>
+    </div>
+</div>

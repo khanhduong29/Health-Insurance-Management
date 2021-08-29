@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Health_Insurance_Management.Models.Policy>
+﻿@model IEnumerable<Health_Insurance_Management.Models.PolicyOnEmployee>
 
 @{
     ViewBag.Title = "Index";
@@ -11,8 +11,8 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Employee</a></li>
-        <li class="active">View All</li>
+        <li><a href="#">Policy</a></li>
+        <li class="active">Employee Policy</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -32,12 +32,10 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>@Html.DisplayNameFor(model => model.Company.CompanyName)</th>
-                                <th> @Html.DisplayNameFor(model => model.PolicyName)</th>
-                                <th>@Html.DisplayNameFor(model => model.PolicyDescription)</th>
-                                <th>@Html.DisplayNameFor(model => model.Amount)</th>
-                                <th>@Html.DisplayNameFor(model => model.Emi)</th>
-                                <th>@Html.DisplayNameFor(model => model.MedicalId)</th>
+                                <th>@Html.DisplayNameFor(model => model.Employee.EmployeeName)</th>
+                                <th>@Html.DisplayNameFor(model => model.Policy.PolicyName)</th>
+                                <th>@Html.DisplayNameFor(model => model.StartDate)</th>
+                                <th>@Html.DisplayNameFor(model => model.EndDate)</th>
                                 <th>@Html.DisplayNameFor(model => model.Status)</th>
                                 <th>@Html.DisplayNameFor(model => model.CreatedDate)</th>
                                 <th>@Html.DisplayNameFor(model => model.UpdatedDate)</th>
@@ -49,25 +47,19 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.PolicyId)
+                                        @Html.DisplayFor(modelItem => item.Id)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Company.CompanyName)
+                                        @Html.DisplayFor(modelItem => item.Employee.EmployeeName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.PolicyName)
+                                        @Html.DisplayFor(modelItem => item.Policy.PolicyName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.PolicyDescription)
+                                        @Html.DisplayFor(modelItem => item.StartDate)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Amount)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Emi)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MedicalId)
+                                        @Html.DisplayFor(modelItem => item.EndDate)
                                     </td>
                                     <td>
                                         @if (item.Status == Health_Insurance_Management.Models.Enum.Status.Active)
@@ -92,16 +84,16 @@
                                             <ul class="dropdown-menu" role="menu">
                                                 @if (item.Status == Health_Insurance_Management.Models.Enum.Status.Active)
                                                 {
-                                                    <li><a href="@Url.Action("ChangeStatus", "Policies", new { id = item.PolicyId })">DeActive</a></li>
+                                                    <li><a href="@Url.Action("ChangeStatus", "PolicyOnEmployees", new { id = item.Id })">DeActive</a></li>
                                                 }
                                                 else
                                                 {
-                                                    <li><a href="@Url.Action("ChangeStatus", "Policies", new { id = item.PolicyId })">Active</a></li>
+                                                    <li><a href="@Url.Action("ChangeStatus", "PolicyOnEmployees", new { id = item.Id })">Active</a></li>
                                                 }
                                                 <li class="divider"></li>
-                                                <li><a href="@Url.Action("Details", "Policies", new { id = item.PolicyId })">View Detail</a></li>
-                                                <li><a href="@Url.Action("Edit", "Policies", new { id = item.PolicyId })">Edit</a></li>
-                                                <li><a href="@Url.Action("Delete", "Policies", new { id = item.PolicyId })">Delete</a></li>
+                                                <li><a href="@Url.Action("Details", "PolicyOnEmployees", new { id = item.Id })">View Detail</a></li>
+                                                <li><a href="@Url.Action("Edit", "PolicyOnEmployees", new { id = item.Id })">Edit</a></li>
+                                                <li><a href="@Url.Action("Delete", "PolicyOnEmployees", new { id = item.Id })">Delete</a></li>
                                             </ul>
                                         </div>
                                     </td>

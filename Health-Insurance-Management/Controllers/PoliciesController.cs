@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Health_Insurance_Management.Models;
+using Health_Insurance_Management.Models.Enum;
 
 namespace Health_Insurance_Management.Controllers
 {
@@ -53,6 +54,8 @@ namespace Health_Insurance_Management.Controllers
         {
             if (ModelState.IsValid)
             {
+                policy.Status = Status.Active;
+                policy.CreatedDate = DateTime.Now;
                 db.Policies.Add(policy);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -87,6 +90,7 @@ namespace Health_Insurance_Management.Controllers
         {
             if (ModelState.IsValid)
             {
+                policy.UpdatedDate = DateTime.Now;
                 db.Entry(policy).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -115,8 +119,27 @@ namespace Health_Insurance_Management.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            var employeePolicy = await db.PolicyOnEmployees.Where(x => x.PolicyId == id).ToArrayAsync();
+            foreach(var item in employeePolicy)
+            {
+                db.PolicyOnEmployees.Remove(item);
+                await db.SaveChangesAsync();
+            }
+
             Policy policy = await db.Policies.FindAsync(id);
+
             db.Policies.Remove(policy);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet, ActionName("ChangeStatus")]
+        public async Task<ActionResult> ChangStatus(int id)
+        {
+            var policy = await db.Policies.FindAsync(id);
+
+            policy.Status = policy.Status == Status.Active ? Status.Deactive : Status.Active;
+            db.Entry(policy).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

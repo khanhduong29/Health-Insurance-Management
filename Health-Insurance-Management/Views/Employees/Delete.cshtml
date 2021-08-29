@@ -6,7 +6,7 @@
 }
 
 <div class="content">
-    <h4>Employee: @Html.DisplayFor(model => model.EmployeeName)</h4>
+    <h4>Employee: @Html.DisplayNameFor(model => model.EmployeeName)</h4>
     <hr />
     <div class="row">
         <div class="col-md-12">
@@ -56,7 +56,7 @@
             {
                 @Html.AntiForgeryToken()
                 <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-danger" /> |
+                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('All EmployeePolicy of Employee will be deleted !')"/> |
                     @Html.ActionLink("Back to List", "Index")
                 </div>
             }

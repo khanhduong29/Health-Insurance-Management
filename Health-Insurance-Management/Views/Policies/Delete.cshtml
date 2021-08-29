@@ -5,93 +5,57 @@
     Layout = "~/Views/Admin/Layout/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Policy</h4>
+<div class="content">
+    <h4>Employee: @Html.DisplayNameFor(model => model.PolicyName)</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Company.CompanyName)
-        </dt>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="lead">Are you sure you want to delete this?</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Company.CompanyName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PolicyName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PolicyName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PolicyDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PolicyDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Emi)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Emi)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MedicalId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MedicalId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedDate)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th> @Html.DisplayNameFor(model => model.Company.CompanyName):</th>
+                        <td> @Html.DisplayNameFor(model => model.Company.CompanyName)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.PolicyName):</th>
+                        <td>@Html.DisplayFor(model => model.PolicyName)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.PolicyDescription):</th>
+                        <td>@Html.DisplayFor(model => model.PolicyDescription)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Amount):</th>
+                        <td>@Html.DisplayFor(model => model.Amount)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Emi):</th>
+                        <td>@Html.DisplayFor(model => model.Emi)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.MedicalId):</th>
+                        <td>@Html.DisplayFor(model => model.MedicalId)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Status):</th>
+                        <td>@Html.DisplayFor(model => model.Status)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CreatedDate):</th>
+                        <td>@Html.DisplayFor(model => model.CreatedDate)</td>
+                    </tr>
+                </table>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('All Employee and EmployeePolicy of Policy will be deleted !')"/> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
         </div>
-    }
+    </div>
 </div>

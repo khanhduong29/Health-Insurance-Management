@@ -295,23 +295,28 @@
     <script src="~/Content/Admin/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Content/Admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script>
-      $(function () {
-        $('#example1').DataTable()
-        $('#example2').DataTable({
-          'paging'      : true,
-          'lengthChange': true,
-          'searching'   : true,
-          'ordering'    : true,
-          'info'        : true,
-          'autoWidth'   : true,
-          'responsive'  : true
+        $(function () {
+            $('#example1').DataTable()
+            $('#example2').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': true,
+                'responsive': true,
+            })
         })
-      })
 
-    //Date picker
-    $('#datepicker').datepicker({
-        autoclose: true
-    })
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+        $('#datepicker-1').datepicker({
+            autoclose: true
+        })
+        });
+
     </script>
 
     @RenderSection("scripts", required: false)

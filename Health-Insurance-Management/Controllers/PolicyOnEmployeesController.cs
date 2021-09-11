@@ -12,123 +12,118 @@ using Health_Insurance_Management.Models.Enum;
 
 namespace Health_Insurance_Management.Controllers
 {
-    public class EmployeesController : Controller
+    public class PolicyOnEmployeesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Employees
+        // GET: PolicyOnEmployees
         public async Task<ActionResult> Index()
         {
-            var employees = db.Employees.Include(e => e.GetPolicy);
-            return View(await employees.ToListAsync());
+            var policyOnEmployees = db.PolicyOnEmployees.Include(p => p.Employee).Include(p => p.Policy);
+            return View(await policyOnEmployees.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: PolicyOnEmployees/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
-            if (employee == null)
+            PolicyOnEmployee policyOnEmployee = await db.PolicyOnEmployees.FindAsync(id);
+            if (policyOnEmployee == null)
             {
                 return HttpNotFound();
             }
-            return View(employee);
+            return View(policyOnEmployee);
         }
 
-        // GET: Employees/Create
+        // GET: PolicyOnEmployees/Create
         public ActionResult Create()
         {
+            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
             ViewBag.PolicyId = new SelectList(db.Policies, "PolicyId", "PolicyName");
             return View();
         }
 
-        // POST: Employees/Create
+        // POST: PolicyOnEmployees/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "EmployeeId,PolicyId,EmployeeName,Designation,JoinDate,Salary,EmployeeAddress,EmployeePhone,Status,CreatedDate,UpdatedDate")] Employee employee)
+        public async Task<ActionResult> Create([Bind(Include = "Id,EmployeeId,PolicyId,StartDate,EndDate,Status,CreatedDate,UpdatedDate")] PolicyOnEmployee policyOnEmployee)
         {
             if (ModelState.IsValid)
             {
-                employee.Status = Status.Active;
-                employee.CreatedDate = DateTime.Now;
-                db.Employees.Add(employee);
+                policyOnEmployee.CreatedDate = DateTime.Now;
+                db.PolicyOnEmployees.Add(policyOnEmployee);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PolicyId = new SelectList(db.Policies, "PolicyId", "PolicyName", employee.PolicyId);
-            return View(employee);
+            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", policyOnEmployee.EmployeeId);
+            ViewBag.PolicyId = new SelectList(db.Policies, "PolicyId", "PolicyName", policyOnEmployee.PolicyId);
+            return View(policyOnEmployee);
         }
 
-        // GET: Employees/Edit/5
+        // GET: PolicyOnEmployees/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
-            if (employee == null)
+            PolicyOnEmployee policyOnEmployee = await db.PolicyOnEmployees.FindAsync(id);
+            if (policyOnEmployee == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PolicyId = new SelectList(db.Policies, "PolicyId", "PolicyName", employee.PolicyId);
-            return View(employee);
+            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", policyOnEmployee.EmployeeId);
+            ViewBag.PolicyId = new SelectList(db.Policies, "PolicyId", "PolicyName", policyOnEmployee.PolicyId);
+            return View(policyOnEmployee);
         }
 
-        // POST: Employees/Edit/5
+        // POST: PolicyOnEmployees/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "EmployeeId,PolicyId,EmployeeName,Designation,JoinDate,Salary,EmployeeAddress,EmployeePhone,Status,CreatedDate,UpdatedDate")] Employee employee)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,EmployeeId,PolicyId,StartDate,EndDate,Status,CreatedDate,UpdatedDate")] PolicyOnEmployee policyOnEmployee)
         {
             if (ModelState.IsValid)
             {
-                employee.UpdatedDate = DateTime.Now;
-                
-                db.Entry(employee).State = EntityState.Modified;
+                policyOnEmployee.UpdatedDate = DateTime.Now;
+                db.Entry(policyOnEmployee).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.PolicyId = new SelectList(db.Policies, "PolicyId", "PolicyName", employee.PolicyId);
-            return View(employee);
+            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", policyOnEmployee.EmployeeId);
+            ViewBag.PolicyId = new SelectList(db.Policies, "PolicyId", "PolicyName", policyOnEmployee.PolicyId);
+            return View(policyOnEmployee);
         }
 
-        // GET: Employees/Delete/5
+        // GET: PolicyOnEmployees/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
-            if (employee == null)
+            PolicyOnEmployee policyOnEmployee = await db.PolicyOnEmployees.FindAsync(id);
+            if (policyOnEmployee == null)
             {
                 return HttpNotFound();
             }
-            return View(employee);
+            return View(policyOnEmployee);
         }
 
-        // POST: Employees/Delete/5
+        // POST: PolicyOnEmployees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            var employeePolicy = await db.PolicyOnEmployees.Where(x => x.EmployeeId == id).ToArrayAsync();
-            foreach (var item in employeePolicy)
-            {
-                db.PolicyOnEmployees.Remove(item);
-                await db.SaveChangesAsync();
-            }
-
-            Employee employee = await db.Employees.FindAsync(id);
-            db.Employees.Remove(employee);
+            PolicyOnEmployee policyOnEmployee = await db.PolicyOnEmployees.FindAsync(id);
+            db.PolicyOnEmployees.Remove(policyOnEmployee);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -136,14 +131,13 @@ namespace Health_Insurance_Management.Controllers
         [HttpGet, ActionName("ChangeStatus")]
         public async Task<ActionResult> ChangStatus(int id)
         {
-            var employee = await db.Employees.FindAsync(id);
+            var policyOnEmployee = await db.PolicyOnEmployees.FindAsync(id);
 
-            employee.Status = employee.Status == Status.Active ? Status.Deactive : Status.Active;
-            db.Entry(employee).State = EntityState.Modified;
+            policyOnEmployee.Status = policyOnEmployee.Status == Status.Active ? Status.Deactive : Status.Active;
+            db.Entry(policyOnEmployee).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
 
         protected override void Dispose(bool disposing)
         {

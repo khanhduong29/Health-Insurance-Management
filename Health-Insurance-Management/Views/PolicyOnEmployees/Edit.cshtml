@@ -1,0 +1,87 @@
+﻿@model Health_Insurance_Management.Models.PolicyOnEmployee
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Admin/Layout/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <section class="content-header">
+        <h1>
+            Health-Insurance-Management
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Employee Policy</a></li>
+            <li class="active">Create</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Create Employee</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" action="@Url.Action("Edit")" method="post">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Employee</label>
+                                @Html.DropDownList("EmployeeId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label>Policy</label>
+                                @Html.DropDownList("PolicyId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PolicyId, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label>Join Date</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control pull-right", @id = "datepicker" } })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label>Join Date</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control pull-right", @id = "datepicker" } })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control", @type = "hidden" } })
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <input type="submit" value="Save" class="btn btn-success" />
+                        </div>
+                    </form>
+                </div>
+                <a href="@Url.Action("Index", "PolicyOnEmployees")" class="btn btn-info"> <= Back to List</a>
+                <!-- /.box -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

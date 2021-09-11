@@ -30,7 +30,7 @@
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form">
+                    <form role="form" action="@Url.Action("Edit")" method="post">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.EmployeeId)
                         <div class="box-body">

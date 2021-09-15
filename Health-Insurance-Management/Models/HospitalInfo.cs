@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Health_Insurance_Management.Models.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Health_Insurance_Management.Models
         [Required]
         public string HospitalAddress { get; set; }
         public string HospitalURL { get; set; }
-        public int Status { get; set; }
+        public Status Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
     }

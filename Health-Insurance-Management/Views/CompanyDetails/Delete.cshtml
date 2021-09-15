@@ -1,0 +1,53 @@
+﻿@model Health_Insurance_Management.Models.CompanyDetail
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Admin/Layout/_Layout.cshtml";
+}
+
+<div class="content">
+    <h4>Company: @Html.DisplayNameFor(model => model.CompanyName)</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <p class="lead">Are you sure you want to delete this?</p>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CompanyName):</th>
+                        <td>@Html.DisplayFor(model => model.CompanyName)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CompanyAddress):</th>
+                        <td>@Html.DisplayFor(model => model.CompanyAddress)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CompanyPhone):</th>
+                        <td>@Html.DisplayFor(model => model.CompanyPhone)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CompanyURL):</th>
+                        <td>@Html.DisplayFor(model => model.CompanyURL)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Status):</th>
+                        <td>@Html.DisplayFor(model => model.Status)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CreatedDate):</th>
+                        <td>@Html.DisplayFor(model => model.CreatedDate)</td>
+                    </tr>
+                </table>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('All information of company will be deleted !')" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
+        </div>
+    </div>
+</div>

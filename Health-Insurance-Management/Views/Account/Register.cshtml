@@ -1,8 +1,11 @@
 ﻿@model Health_Insurance_Management.Models.RegisterViewModel
 @{
+    Layout = "~/Views/Admin/Layout/_Layout.cshtml";
     ViewBag.Title = "Register";
-}
 
+    //var list = new List<string>() { "A", "B", "C", "D", "E" };
+    //ViewBag.list = list ;
+}
 <h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -13,20 +16,32 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-8">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-8">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-8">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.EmployeeId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-8">
+            @Html.DropDownListFor(m => m.EmployeeId, new SelectList(ViewBag.list), "Select an employee", htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.RoleId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-8">
+            @Html.DropDownListFor(m => m.RoleId, new SelectList(ViewBag.Roles,"Value","Text"), "Select an role", htmlAttributes: new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

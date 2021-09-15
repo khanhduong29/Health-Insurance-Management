@@ -9,25 +9,44 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Health_Insurance_Management.Models;
+using System.Collections.Generic;
+using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Health_Insurance_Management.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationRoleManager _roleManager;
+        private RoleManager<IdentityRole> _role;
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager , ApplicationRoleManager roleManager, RoleManager<IdentityRole> role)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
+            _role = role;
         }
 
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
         public ApplicationSignInManager SignInManager
         {
             get
@@ -139,6 +158,16 @@ namespace Health_Insurance_Management.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            RegisterViewModel model = new RegisterViewModel();
+            ConfigureRegisterViewModel(model);
+            List<SelectListItem> roles = new List<SelectListItem>();
+            
+            foreach (var item in RoleManager.Roles)
+            {
+                roles.Add(new SelectListItem() { Value = item.Name, Text = item.Name });
+            }
+            ViewBag.list = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
+            ViewBag.Roles = roles;
             return View();
         }
 
@@ -151,10 +180,11 @@ namespace Health_Insurance_Management.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmloyeeId = model.EmployeeId};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    result = await UserManager.AddToRoleAsync(user.Id, model.RoleId);
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -165,9 +195,10 @@ namespace Health_Insurance_Management.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+                
                 AddErrors(result);
             }
-
+            
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -203,6 +234,7 @@ namespace Health_Insurance_Management.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
+                
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -422,7 +454,21 @@ namespace Health_Insurance_Management.Controllers
 
             base.Dispose(disposing);
         }
-
+        private void ConfigureRegisterViewModel(RegisterViewModel model)
+        {
+            IEnumerable<Employee> employees = db.Employees;
+            model.EmployeeList = employees.Select(a => new SelectListItem
+            {
+                Value = a.EmployeeId.ToString(),
+                Text = a.EmployeeName.ToString()
+            });
+            //IEnumerable<Roles> departments = db.Roles;
+            //model.EmployeeList = departments.Select(a => new SelectListItem
+            //{
+            //    Value = a.EmployeeId.ToString(),
+            //    Text = a.EmployeeName.ToString()
+            //});
+        }
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

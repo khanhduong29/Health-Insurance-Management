@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Health_Insurance_Management.Models
 {
@@ -77,8 +78,13 @@ namespace Health_Insurance_Management.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public int EmployeeId { get; set; }
+        public IEnumerable<SelectListItem> EmployeeList { get; set; }
+        public string RoleId { get; set; }
+        public IEnumerable<SelectListItem> RoleList { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -96,7 +102,7 @@ namespace Health_Insurance_Management.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
